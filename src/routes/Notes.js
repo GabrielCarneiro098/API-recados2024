@@ -97,7 +97,7 @@ router.delete("/message/:id", (req, res) => {
     });
   } else {
     messages.splice(messageID, 1);
-    res.status(400).json({ message: "Mensagem apagada com sucesso." });
+    res.status(200).json({ message: "Mensagem apagada com sucesso." });
   }
 });
 
