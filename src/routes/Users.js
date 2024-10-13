@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
 
   if (existeUsuario) {
     res.status(400).json({ erro: "Email já cadastrado, insira outro." });
-  } else {
+  } else if (email && senha && nome) {
     const senhaCriptograda = await bcrypt.hash(senha, 10);
 
     const newUser = { id: uuidv4(), nome, email, senha: senhaCriptograda };
