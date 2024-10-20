@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
     const senhaValida = await bcrypt.compare(senha, existeUsuario.senha);
 
     if (!senhaValida) {
-      res.status(400).json({ erro: "senha incorreta." });
+      res.status(400).json({ error: "senha incorreta." });
     } else {
       res.status(200).json({
         message: `Seja bem vindo ${existeUsuario.nome}! Pessoa usuária logada com sucesso!`,
