@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
   const existeUsuario = users.find((user) => user.email === email);
   if (!existeUsuario) {
     res.status(400).json({
-      erro: "Email não encontrado no sistema, verifique ou crie uma conta",
+      error: "Email não encontrado no sistema, verifique ou crie uma conta",
     });
   } else {
     const senhaValida = await bcrypt.compare(senha, existeUsuario.senha);

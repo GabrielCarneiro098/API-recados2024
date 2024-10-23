@@ -44,6 +44,9 @@ router.get("/message/:email", (req, res) => {
       .status(404)
       .json({ erro: "Email não encontrado, verifique ou crie uma conta" });
   } else {
+    const recadosFiltrados = messages.filter(
+      (message) => message.email == email
+    );
     res.status(200).json({
       message: `Seja bem vindo! ${messages
         .map(
@@ -51,6 +54,7 @@ router.get("/message/:email", (req, res) => {
             `ID: ${message.id}, Titulo: ${message.title}, Descrição: ${message.description}`
         )
         .join(" | ")}`,
+      recadosFiltrados,
     });
   }
 });
