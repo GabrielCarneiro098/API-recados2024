@@ -37,7 +37,15 @@ router.post("/message", (req, res) => {
 router.get("/message/:email", (req, res) => {
   const { email } = req.params;
 
+  const { page, perPage } = req.query;
+
+  const currentPage = parseInt(page) || 1; //Valor padrão 1
+  const itemsPerPage = parseInt(perPage) || 10; //Valor padrão 10
+
   const existeUsuario = users.find((user) => user.email === email);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   if (!existeUsuario) {
     res
@@ -47,15 +55,12 @@ router.get("/message/:email", (req, res) => {
     const recadosFiltrados = messages.filter(
       (message) => message.email == email
     );
-    res.status(200).json({
-      message: `Seja bem vindo! ${messages
-        .map(
-          (message) =>
-            `ID: ${message.id}, Titulo: ${message.title}, Descrição: ${message.description}`
-        )
-        .join(" | ")}`,
-      recadosFiltrados,
-    });
+
+    const paginatedNotes = recadosFiltrados.slice(startIndex, endIndex);
+    const totalItems = recadosFiltrados.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    res.status(200).json({ notes: paginatedNotes, totalPages, currentPage });
   }
 });
 
